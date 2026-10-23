@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Paneles solares en Ciudad Juárez | ASR Renovables · Eléctricos, HVAC y generadores</title>
+    <meta
+      name="description"
+      content="Instalación de paneles solares residenciales, comerciales e industriales en Ciudad Juárez, Chihuahua. Sistemas interconectados, híbridos y aislados, servicios eléctricos, HVAC y generadores. Visita técnica sin costo."
+    />
+    <meta name="theme-color" content="#07090c" />
+    <meta name="geo.region" content="MX-CHH" />
+    <meta name="geo.placename" content="Ciudad Juárez" />
+    <meta name="geo.position" content="31.6904;-106.4245" />
+    <meta name="ICBM" content="31.6904, -106.4245" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://renovablesasr.com/" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://renovablesasr.com/" />
+    <meta property="og:site_name" content="ASR Renovables" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content="ASR Renovables · Paneles solares en Ciudad Juárez" />
+    <meta property="og:description" content="Paga menos luz con el sol de Juárez. Paneles solares para casas, comercios e industria." />
+    <meta property="og:image" content="https://renovablesasr.com/img/atardecer.webp" />
+    <meta property="og:image:alt" content="Paneles solares al atardecer, ASR Renovables" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["LocalBusiness", "ElectricalContractor"],
+        "name": "ASR Renovables",
+        "description": "Paneles solares, servicios eléctricos, HVAC y generadores en Ciudad Juárez, Chihuahua.",
+        "url": "https://renovablesasr.com/",
+        "image": "https://renovablesasr.com/img/atardecer.webp",
+        "logo": "https://renovablesasr.com/img/logo/logo-light.png",
+        "telephone": "+52 656 103 1243",
+        "email": "aerorenovables@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Ciudad Juárez", "addressRegion": "Chihuahua", "addressCountry": "MX" },
+        "geo": { "@type": "GeoCoordinates", "latitude": 31.6904, "longitude": -106.4245 },
+        "areaServed": { "@type": "City", "name": "Ciudad Juárez" },
+        "contactPoint": { "@type": "ContactPoint", "telephone": "+52 656 103 1243", "contactType": "ventas", "availableLanguage": "es" },
+        "makesOffer": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Instalación de paneles solares residenciales, comerciales e industriales" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Servicios e instalaciones eléctricas" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Instalación y mantenimiento de HVAC" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Generadores eléctricos de emergencia" } }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "¿Cuánto cuesta un sistema de paneles solares?", "acceptedAnswer": { "@type": "Answer", "text": "Depende de tu consumo, de tu techo y de si quieres baterías. Hacemos una visita técnica sin costo y te damos una cotización exacta." } },
+          { "@type": "Question", "name": "¿Qué pasa si se va la luz?", "acceptedAnswer": { "@type": "Answer", "text": "Un sistema interconectado se apaga por seguridad. Para tener luz en un apagón necesitas un sistema híbrido con baterías o un generador." } },
+          { "@type": "Question", "name": "¿Cuánto tarda la instalación?", "acceptedAnswer": { "@type": "Answer", "text": "Tu sistema queda funcionando en un máximo de 20 días, con el trámite de CFE incluido." } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Pantalla de carga -->
+    <div class="loader" aria-hidden="true">
+      <div class="loader__inner">
+        <div class="loader__logo">
+          <img src="img/logo/icon-light.png" alt="" width="240" height="207" />
+        </div>
+        <div class="loader__bar"><span></span></div>
+        <div class="loader__count"><span class="loader__num">0</span>%</div>
+      </div>
+    </div>
+
+    <!-- Mundo 3D: el sol cruza el cielo mientras bajas -->
+    <canvas class="webgl" aria-hidden="true"></canvas>
+    <div class="veil" aria-hidden="true"></div>
+
+    <!-- Navegación -->
+    <header class="nav">
+      <a href="#inicio" class="nav__brand" aria-label="ASR Renovables, inicio">
+        <img src="img/logo/icon-light.png" alt="" width="40" height="34" />
+        <span class="nav__word"><b>ASR</b> Renovables</span>
+      </a>
+      <nav class="nav__links" aria-label="Principal">
+        <a href="#soluciones">Soluciones</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#clientes">Clientes</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#ahorro">Ahorro</a>
+        <a href="#preguntas">Preguntas</a>
+      </nav>
+      <a href="#contacto" class="btn btn--gold btn--sm nav__cta">Cotizar gratis</a>
+      <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span>
+      </button>
+    </header>
+
+    <div class="menu" id="menu" aria-hidden="true">
+      <nav class="menu__links" aria-label="Menú móvil">
+        <a href="#soluciones">Soluciones solares</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#clientes">Clientes</a>
+        <a href="#empresas">Empresas</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#ahorro">Calcula tu ahorro</a>
+        <a href="#preguntas">Preguntas</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="menu__contact">
+        <a href="tel:+526561031243">656 103 1243</a>
+        <a href="mailto:aerorenovables@gmail.com">aerorenovables@gmail.com</a>
+      </div>
+    </div>
+
+    <!-- Batería solar + contacto rápido (fijos abajo) -->
+    <div class="dock">
+      <a class="hud" href="#ahorro" aria-label="Batería solar: lo que genera hoy un sistema de 5 kWp en Juárez. Toca para calcular tu ahorro">
+        <span class="hud__sky" aria-hidden="true">
+          <svg viewBox="0 0 100 56">
+            <path class="hud__arc" d="M8 50 A42 42 0 0 1 92 50" />
+            <path class="hud__arc-done" d="M8 50 A42 42 0 0 1 92 50" />
+            <line class="hud__horizon" x1="0" y1="50" x2="100" y2="50" />
+            <g class="hud__sun-g" transform="translate(8 50)">
+              <circle class="hud__sun-glow" r="12" />
+              <circle class="hud__rays" r="9.5" />
+              <circle class="hud__sun" r="5.5" />
+            </g>
+          </svg>
+          <span class="hud__time">06:15</span>
+        </span>
+        <span class="hud__main">
+          <span class="hud__head">
+            <span class="hud__label">Amanecer</span>
+            <span class="hud__state">Cargando con el sol</span>
+          </span>
+          <span class="hud__bat">
+            <span class="hud__cell">
+              <span class="hud__level"></span>
+              <span class="hud__flow"><i></i><i></i><i></i></span>
+              <span class="hud__ticks"></span>
+              <svg class="hud__bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" /></svg>
+            </span>
+            <span class="hud__tip"></span>
+            <b class="hud__pct">0%</b>
+          </span>
+          <span class="hud__foot">
+            <span><b class="hud__kwh">0.0</b> kWh hoy</span>
+            <span class="hud__eq">= <b class="hud__eqn">0</b> <span class="hud__equ">cargas de celular</span></span>
+          </span>
+        </span>
+      </a>
+      <div class="fab" role="group" aria-label="Contacto rápido">
+        <a class="fab__call" href="tel:+526561031243"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg><span>Llamar</span></a>
+        <a class="fab__wa" href="https://wa.me/526561031243?text=Hola%20ASR%20Renovables%2C%20vengo%20desde%20tu%20p%C3%A1gina%20web%2C%20me%20interesa%20hacer%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener"><svg class="i-wa" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa" /></svg><span>WhatsApp</span></a>
+      </div>
+    </div>
+
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3.1 3.1 0 0 0-1 2.3c0 1.4 1 2.8 1.2 3s2 3.1 5 4.3c.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4s.2-1.3.2-1.4-.2-.2-.5-.3Z" /></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" /></symbol>
+    </svg>
+
+    <main>
+      <!-- ============ AMANECER · PORTADA ============ -->
+      <section class="hero" id="inicio" data-veil="0">
+        <div class="container hero__inner">
+          <p class="eyebrow hero__eyebrow"><span class="pulse"></span>Amanecer en Ciudad Juárez</p>
+          <h1 class="hero__title">
+            <span class="hero__line"><span class="hero__asr">ASR</span></span>
+            <span class="hero__line"><span class="hero__ren">Renovables</span></span>
+          </h1>
+          <p class="hero__lead">Paga menos luz con el sol de Juárez. Paneles solares, electricidad y clima para casas y negocios.</p>
+          <div class="hero__actions">
+            <form class="quick" data-quick novalidate>
+              <label for="q-quick">¿Cuánto pagas de luz al bimestre?</label>
+              <div class="quick__row">
+                <span class="quick__cur" aria-hidden="true">$</span>
+                <input id="q-quick" type="text" inputmode="numeric" autocomplete="off" placeholder="3,000" maxlength="7" />
+                <button class="btn btn--gold" type="submit">Ver mi ahorro <svg aria-hidden="true"><use href="#i-arrow" /></svg></button>
+              </div>
+            </form>
+            <a class="btn btn--ghost hero__wa" href="https://wa.me/526561031243?text=Hola%20ASR%20Renovables%2C%20vengo%20desde%20tu%20p%C3%A1gina%20web%2C%20me%20interesa%20hacer%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener"><svg class="i-wa" aria-hidden="true"><use href="#i-wa" /></svg>WhatsApp</a>
+          </div>
+          <ul class="hero__trust">
+            <li><svg aria-hidden="true"><use href="#i-check" /></svg>Visita técnica sin costo</li>
+            <li><svg aria-hidden="true"><use href="#i-check" /></svg>Trámite con CFE incluido</li>
+            <li><svg aria-hidden="true"><use href="#i-check" /></svg>Funcionando en 20 días</li>
+          </ul>
+        </div>
+        <div class="scroll-cue" aria-hidden="true">
+          <span>Baja: sale el sol y se carga tu batería</span>
+          <i></i>
+        </div>
+      </section>
+
+      <!-- ============ EL SOL DE JUÁREZ ============ -->
+      <section class="sun section" id="sol" data-veil="0.45">
+        <div class="sun__disc" aria-hidden="true"></div>
+        <div class="container">
+          <p class="eyebrow" data-reveal>Tu ventaja</p>
+          <h2 class="h2 sun__title" data-split>En Juárez <span class="hl">el sol sobra</span>. Tu techo puede convertirlo en ahorro.</h2>
+          <ul class="sun__grid">
+            <li class="sun__stat">
+              <p class="sun__num"><small>≈</small><span data-count="6">6</span></p>
+              <p class="sun__label">horas de sol útil al día</p>
+            </li>
+            <li class="sun__stat">
+              <p class="sun__num"><span data-count="290">290</span><small>+</small></p>
+              <p class="sun__label">días soleados al año</p>
+            </li>
+            <li class="sun__stat">
+              <p class="sun__num"><span data-count="25">25</span><small>+</small></p>
+              <p class="sun__label">años de garantía en paneles</p>
+            </li>
+            <li class="sun__stat">
+              <p class="sun__num"><span data-count="98">98</span><small>%</small></p>
+              <p class="sun__label">menos en tu recibo de CFE</p>
+            </li>
+          </ul>
+          <details class="more" data-reveal>
+            <summary><span>¿De dónde salen estas cifras?</span><i aria-hidden="true"></i></summary>
+            <div class="more__body">
+              <p>
+                Son valores de referencia para Juárez–El Paso: unas 6 horas solares pico al día y más de 290 días soleados al año.
+                Los 25 años son la garantía de potencia de fabricantes como LONGi o JA Solar. El 98 % es la reducción posible con
+                un sistema interconectado bien dimensionado. Tu cifra exacta la calculamos en la visita.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- ============ SOLUCIONES SOLARES ============ -->
+      <section class="solutions section" id="soluciones" data-veil="0.6">
+        <div class="container">
+          <div class="head">
+            <div>
+              <p class="eyebrow" data-reveal>Paneles solares</p>
+              <h2 class="h2" data-split>Elige cómo quieres <span class="hl">usar el sol</span>.</h2>
+            </div>
+            <p class="head__aside" data-reveal>Primero revisamos tu recibo, tu techo y tu instalación. Luego te recomendamos el sistema que sí te conviene.</p>
+          </div>
+
+          <div class="sol-grid">
+            <article class="sol" data-card>
+              <div class="sol__media"><img src="img/interconectado.webp" alt="Inversor Growatt y estructura de un sistema interconectado" loading="lazy" width="1280" height="1280" /></div>
+              <div class="sol__body">
+                <span class="badge badge--gold">El más común</span>
+                <h3>Interconectado</h3>
+                <p>Trabaja junto con CFE y baja tu recibo hasta un <b>98 %</b>.</p>
+                <ul class="ticks">
+                  <li>La inversión se recupera más rápido</li>
+                  <li>Sin baterías ni mantenimiento complicado</li>
+                </ul>
+                <details class="more">
+                  <summary><span>Cómo funciona</span><i aria-hidden="true"></i></summary>
+                  <div class="more__body">
+                    <p>Lo que generas de día se descuenta de lo que consumes, gracias a un medidor bidireccional que instala CFE. Nosotros hacemos el trámite.</p>
+                  </div>
+                </details>
+              </div>
+            </article>
+            <article class="sol" data-card>
+              <div class="sol__media"><img src="img/hibrido.webp" alt="Inversor híbrido Hoymiles con batería y centro de carga" loading="lazy" width="1280" height="1280" /></div>
+              <div class="sol__body">
+                <span class="badge">Con baterías</span>
+                <h3>Híbrido</h3>
+                <p>Ahorra en tu recibo <b>y sigue con luz</b> cuando hay apagón.</p>
+                <ul class="ticks">
+                  <li>Refrigerador, internet y bomba siempre encendidos</li>
+                  <li>Ideal si se te va la luz seguido</li>
+                </ul>
+                <details class="more">
+                  <summary><span>Cómo funciona</span><i aria-hidden="true"></i></summary>
+                  <div class="more__body">
+                    <p>Igual que el interconectado, pero con baterías. Cuando falla la red, el sistema sigue alimentando lo importante de tu casa o negocio.</p>
+                  </div>
+                </details>
+              </div>
+            </article>
+            <article class="sol" data-card>
+              <div class="sol__media"><img src="img/aislado.webp" alt="Banco de baterías e inversor de un sistema aislado" loading="lazy" width="1280" height="1280" /></div>
+              <div class="sol__body">
+                <span class="badge">Sin CFE</span>
+                <h3>Aislado</h3>
+                <p>Energía propia <b>donde no llega la red</b>.</p>
+                <ul class="ticks">
+                  <li>Para ranchos, terrenos y cabañas</li>
+                  <li>Sin contrato ni recibo de luz</li>
+                </ul>
+                <details class="more">
+                  <summary><span>Cómo funciona</span><i aria-hidden="true"></i></summary>
+                  <div class="more__body">
+                    <p>Paneles, baterías e inversor trabajan solos. Dimensionamos el banco de baterías según lo que necesites encender de noche.</p>
+                  </div>
+                </details>
+              </div>
+            </article>
+          </div>
+
+          <p class="includes" data-reveal>
+            <span>Todos incluyen</span>
+            <b>Diseño</b><b>Instalación</b><b>Trámite con CFE</b><b>Monitoreo en tu celular</b><b>Garantía</b>
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ PROYECTOS ============ -->
+      <section class="projects section" id="proyectos" data-veil="0.82">
+        <div class="container">
+          <div class="head">
+            <div>
+              <p class="eyebrow" data-reveal>Proyectos reales</p>
+              <h2 class="h2" data-split>Esto no es un render. Son techos de Juárez.</h2>
+            </div>
+            <div class="filters" role="group" aria-label="Filtrar proyectos" data-reveal>
+              <button type="button" class="is-active" data-filter="todos" aria-pressed="true">Todos</button>
+              <button type="button" data-filter="residencial" aria-pressed="false">Casas</button>
+              <button type="button" data-filter="comercial" aria-pressed="false">Comercios</button>
+              <button type="button" data-filter="industrial" aria-pressed="false">Industria</button>
+            </div>
+          </div>
+
+          <!-- Para agregar un proyecto: copia un <article class="project"> y cambia foto, categoría (data-cat) y textos -->
+          <div class="project-grid">
+            <article class="project project--feature" data-cat="comercial industrial">
+              <button type="button" class="project__media" data-zoom aria-label="Ver foto grande: plaza comercial">
+                <img src="img/industrial.webp" alt="Vista de dron de plaza comercial con el techo cubierto de paneles solares" loading="lazy" width="1152" height="1152" />
+              </button>
+              <div class="project__body">
+                <span class="badge badge--gold">Comercial</span>
+                <h3>Plaza comercial</h3>
+                <p>Decenas de paneles repartidos en todo el techo de lámina, entre los equipos de aire acondicionado.</p>
+                <dl class="facts">
+                  <div><dt>Techo</dt><dd>Lámina</dd></div>
+                  <div><dt>Sistema</dt><dd>Interconectado</dd></div>
+                </dl>
+              </div>
+            </article>
+            <article class="project" data-cat="industrial">
+              <button type="button" class="project__media" data-zoom aria-label="Ver foto grande: nave con techo a dos aguas">
+                <img src="img/empresas.webp" alt="Paneles solares sobre techo de lámina a dos aguas" loading="lazy" width="1280" height="719" />
+              </button>
+              <div class="project__body">
+                <span class="badge">Industrial</span>
+                <h3>Nave con techo a dos aguas</h3>
+                <p>Paneles fijados directo a la lámina, siguiendo la pendiente.</p>
+              </div>
+            </article>
+            <article class="project" data-cat="residencial">
+              <button type="button" class="project__media" data-zoom aria-label="Ver foto grande: estructura elevada">
+                <img src="img/paneles-techo.webp" alt="Paneles solares sobre estructura de aluminio elevada en techo de lámina" loading="lazy" width="1280" height="719" />
+              </button>
+              <div class="project__body">
+                <span class="badge">Residencial</span>
+                <h3>Estructura elevada</h3>
+                <p>Aluminio sobre techo de lámina, con la inclinación ideal para Juárez.</p>
+              </div>
+            </article>
+            <article class="project" data-cat="residencial">
+              <button type="button" class="project__media" data-zoom aria-label="Ver foto grande: azotea de casa">
+                <img src="img/residencial.webp" alt="Vista aérea de casa con paneles solares en azotea" loading="lazy" width="720" height="720" />
+              </button>
+              <div class="project__body">
+                <span class="badge">Residencial</span>
+                <h3>Azotea de casa</h3>
+                <p>Sistema interconectado junto al minisplit, sin estorbar.</p>
+              </div>
+            </article>
+            <article class="project" data-cat="residencial">
+              <button type="button" class="project__media" data-zoom aria-label="Ver foto grande: estructura de aluminio">
+                <img src="img/hogar.webp" alt="Sistema fotovoltaico sobre estructura de aluminio en azotea de casa" loading="lazy" width="1085" height="609" />
+              </button>
+              <div class="project__body">
+                <span class="badge">Residencial</span>
+                <h3>Estructura de aluminio</h3>
+                <p>Paneles levantados para aprovechar mejor el sol de la tarde.</p>
+              </div>
+            </article>
+            <article class="project" data-cat="residencial">
+              <button type="button" class="project__media" data-zoom aria-label="Ver foto grande: casa de ladrillo">
+                <img src="img/personalizado.webp" alt="Casa de ladrillo con sistema solar personalizado" loading="lazy" width="720" height="720" />
+              </button>
+              <div class="project__body">
+                <span class="badge">A la medida</span>
+                <h3>Casa de ladrillo</h3>
+                <p>Estructura especial diseñada para este techo.</p>
+              </div>
+            </article>
+            <article class="project" data-cat="comercial">
+              <button type="button" class="project__media" data-zoom aria-label="Ver foto grande: local comercial">
+                <img src="img/comercial.webp" alt="Local comercial con paneles solares en la azotea" loading="lazy" width="720" height="720" />
+              </button>
+              <div class="project__body">
+                <span class="badge">Comercial</span>
+                <h3>Local comercial</h3>
+                <p>Azotea solar para bajar el recibo del negocio.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="brands" data-reveal>
+            <p class="brands__title">Trabajamos con marcas líderes, con garantía de fábrica</p>
+            <div class="marquee">
+              <div class="marquee__track">
+                <img src="img/brands/canadian-solar.webp" alt="Canadian Solar" width="867" height="128" />
+                <img src="img/brands/ja-solar.webp" alt="JA Solar" width="694" height="126" />
+                <img src="img/brands/hoymiles.webp" alt="Hoymiles" width="428" height="128" />
+                <img src="img/brands/growatt.webp" alt="Growatt" width="520" height="127" />
+                <img src="img/brands/huawei.webp" alt="Huawei" width="288" height="293" class="tall" />
+                <img src="img/brands/longi.webp" alt="LONGi" width="338" height="127" />
+                <img src="img/brands/tw-solar.webp" alt="TW Solar" width="744" height="129" />
+                <img src="img/brands/k2.webp" alt="K2 Systems" width="480" height="480" class="tall" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CLIENTES SATISFECHOS ============ -->
+      <!-- Las reseñas publicadas viven en public/resenas.json (se pintan solas).
+           Las nuevas llegan al correo desde el formulario de abajo; ASR las revisa y las agrega al JSON.
+           Si ASR abre su Perfil de Negocio en Google, pega el enlace "Pedir reseñas" en data-google del botón. -->
+      <section class="clients section" id="clientes" data-veil="0.78">
+        <div class="container">
+          <div class="head">
+            <div>
+              <p class="eyebrow" data-reveal>Clientes satisfechos</p>
+              <h2 class="h2" data-split>La mejor recomendación es un recibo de CFE más bajo.</h2>
+            </div>
+            <p class="head__aside" data-reveal data-reviews-aside>¿Ya instalamos tu sistema? Cuéntale a Juárez cómo te fue.</p>
+          </div>
+
+          <div class="reviews" data-reviews hidden></div>
+
+          <div class="rate" data-reveal>
+            <div class="rate__copy">
+              <h3>¿Ya eres cliente de ASR?</h3>
+              <p data-reviews-empty>Estamos juntando las primeras reseñas de nuestros clientes. Tu opinión ayuda a otras familias de Juárez a decidirse por el sol.</p>
+              <p>Revisamos cada reseña antes de publicarla y solo usamos el nombre con el que quieras aparecer.</p>
+              <div class="rate__alt">
+                <a class="btn btn--ghost btn--sm" data-google href="" target="_blank" rel="noopener" hidden>Reseñar en Google <svg aria-hidden="true"><use href="#i-arrow" /></svg></a>
+                <a class="rate__wa" href="https://wa.me/526561031243?text=Hola%2C%20quiero%20dejar%20mi%20rese%C3%B1a" target="_blank" rel="noopener"><svg class="i-wa" aria-hidden="true"><use href="#i-wa" /></svg>¿Prefieres WhatsApp?</a>
+              </div>
+            </div>
+
+            <form class="rate-form" novalidate data-endpoint="https://formsubmit.co/ajax/aerorenovables@gmail.com">
+              <fieldset class="field">
+                <legend>Tu calificación</legend>
+                <div class="stars-input" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
+                  <label><input type="radio" name="estrellas" value="1" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">1 estrella</span></label>
+                  <label><input type="radio" name="estrellas" value="2" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">2 estrellas</span></label>
+                  <label><input type="radio" name="estrellas" value="3" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">3 estrellas</span></label>
+                  <label><input type="radio" name="estrellas" value="4" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">4 estrellas</span></label>
+                  <label><input type="radio" name="estrellas" value="5" checked /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">5 estrellas</span></label>
+                </div>
+              </fieldset>
+              <div class="field">
+                <label for="r-name">Nombre con el que quieres aparecer</label>
+                <input id="r-name" name="nombre" type="text" autocomplete="name" placeholder="Ej. Familia Rodríguez" required />
+              </div>
+              <fieldset class="field">
+                <legend>¿Qué instalamos?</legend>
+                <div class="pills">
+                  <label><input type="radio" name="sistema" value="Sistema residencial" checked /><span>Casa</span></label>
+                  <label><input type="radio" name="sistema" value="Sistema comercial" /><span>Comercio</span></label>
+                  <label><input type="radio" name="sistema" value="Sistema industrial" /><span>Industria</span></label>
+                  <label><input type="radio" name="sistema" value="Servicio eléctrico o clima" /><span>Eléctrico / clima</span></label>
+                </div>
+              </fieldset>
+              <div class="field">
+                <label for="r-msg">Tu reseña</label>
+                <textarea id="r-msg" name="resena" rows="3" maxlength="400" required placeholder="¿Cómo te fue? ¿Cuánto bajó tu recibo?"></textarea>
+              </div>
+              <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <label class="consent"><input type="checkbox" name="autorizo" required /><span>Autorizo a ASR Renovables a publicar mi reseña en su sitio con el nombre que escribí. <a href="aviso-privacidad.html" target="_blank">Aviso de privacidad</a></span></label>
+              <button type="submit" class="btn btn--gold btn--block">Enviar mi reseña</button>
+              <p class="rate-form__note" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ EMPRESAS ============ -->
+      <section class="biz section" id="empresas" data-veil="0.7">
+        <div class="container">
+          <div class="biz__card">
+            <div class="biz__media">
+              <img src="img/dron-portada.webp" alt="Vista aérea de paneles solares instalados sobre un techo comercial" loading="lazy" width="1280" height="720" />
+              <!-- el video se carga desde main.js al acercarse (versión ligera en móvil) -->
+              <video class="biz__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="media/dron.mp4" data-src-mobile="media/dron-movil.mp4"></video>
+            </div>
+            <div class="biz__content">
+              <p class="eyebrow">Para empresas</p>
+              <h2 class="h2">Convierte tu recibo de luz en una inversión.</h2>
+              <ul class="ticks ticks--lg">
+                <li>Sistemas para comercios, oficinas e industria</li>
+                <li>Aprovechamos cada metro de techo</li>
+                <li>Deducible al 100 %* <small>(Art. 34, fr. XIII LISR)</small></li>
+              </ul>
+              <p class="biz__legal">*Para empresas y personas con actividad empresarial que deducen inversiones; no aplica en RESICO de personas físicas. El equipo debe seguir operando al menos 5 años después del ejercicio en que se deduce; si no, se paga el ISR de la diferencia. Consulta a tu contador.</p>
+              <a class="btn btn--gold" href="#contacto" data-tipo="Comercial">Pedir evaluación <svg aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SERVICIOS ============ -->
+      <section class="services section" id="servicios" data-veil="0.82">
+        <div class="container">
+          <div class="head">
+            <div>
+              <p class="eyebrow" data-reveal>También hacemos</p>
+              <h2 class="h2" data-split>Todo lo eléctrico, con el mismo equipo.</h2>
+            </div>
+            <p class="head__aside" data-reveal>¿Quieres instalar minisplits sin que se dispare tu recibo? Lo resolvemos con solar y una instalación eléctrica a la altura.</p>
+          </div>
+          <div class="cards">
+            <article class="card" data-card>
+              <div class="card__media"><img src="img/paneles-techo.webp" alt="" loading="lazy" width="1280" height="719" /></div>
+              <div class="card__body">
+                <h3>Energía solar</h3>
+                <p>Instalación, mantenimiento y limpieza de paneles.</p>
+              </div>
+            </article>
+            <article class="card" data-card>
+              <div class="card__media"><img src="img/electrico.webp" alt="" loading="lazy" width="1280" height="719" /></div>
+              <div class="card__body">
+                <h3>Instalaciones eléctricas</h3>
+                <p>Diagnóstico, reparaciones y ampliaciones.</p>
+              </div>
+            </article>
+            <article class="card" data-card>
+              <div class="card__media"><img src="img/hvac.webp" alt="" loading="lazy" width="643" height="361" /></div>
+              <div class="card__body">
+                <h3>Clima (HVAC)</h3>
+                <p>Minisplits eficientes, instalados y con mantenimiento.</p>
+              </div>
+            </article>
+            <article class="card" data-card>
+              <div class="card__media"><img src="img/atardecer.webp" alt="" loading="lazy" width="1280" height="719" /></div>
+              <div class="card__body">
+                <h3>Generadores</h3>
+                <p>Tu negocio sigue operando aunque se vaya la luz.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CÓMO TRABAJAMOS + POR QUÉ ASR ============ -->
+      <section class="process section" id="proceso" data-veil="0.82">
+        <div class="container">
+          <div class="head">
+            <div>
+              <p class="eyebrow" data-reveal>Cómo trabajamos</p>
+              <h2 class="h2" data-split>De la visita a la conexión en <span class="hl">20 días</span>.</h2>
+            </div>
+            <p class="head__aside" data-reveal>Tú nos das tu recibo. Del resto nos encargamos nosotros.</p>
+          </div>
+          <div class="steps-wrap">
+          <div class="steps__rail" aria-hidden="true"><span></span></div>
+          <ol class="steps">
+            <li class="step" data-card><span class="step__num">1</span><h3>Visita técnica</h3><p>Revisamos recibos, techo e instalación. Sin costo.</p></li>
+            <li class="step" data-card><span class="step__num">2</span><h3>Diseño</h3><p>Un sistema a la medida de tu consumo.</p></li>
+            <li class="step" data-card><span class="step__num">3</span><h3>Instalación</h3><p>Equipo propio, limpio y rápido.</p></li>
+            <li class="step" data-card><span class="step__num">4</span><h3>Conexión CFE</h3><p>Hacemos el trámite por ti.</p></li>
+            <li class="step" data-card><span class="step__num">5</span><h3>Seguimiento</h3><p>Monitoreo y mantenimiento.</p></li>
+          </ol>
+          </div>
+
+          <div class="why">
+            <figure class="why__photo" data-reveal>
+              <img src="img/instalador.webp" alt="Instalador de ASR Renovables midiendo irradiancia sobre un techo industrial" loading="lazy" width="1280" height="1280" />
+              <figcaption>Instaladores propios, capacitados en solar y electricidad.</figcaption>
+            </figure>
+            <div class="why__body">
+              <h3 class="h3" data-reveal>¿Por qué ASR?</h3>
+              <ul class="why__list">
+                <li data-reveal><b>Todo en un lugar</b>Solar, electricidad, clima y generadores.</li>
+                <li data-reveal><b>Diseño a tu medida</b>Según tu consumo y tu espacio, no un paquete genérico.</li>
+                <li data-reveal><b>Instalación limpia</b>Bien hecha y que se vea bien en tu techo.</li>
+                <li data-reveal><b>Estructura K2 Systems</b>Aluminio anodizado: no se oxida y aguanta el viento.</li>
+                <li data-reveal><b>Monitoreo en tu celular</b>Ves cuánto generas y cuánto ahorras, en tiempo real.</li>
+                <li data-reveal><b>Equipos certificados</b>Con garantía de fábrica.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CALCULADORA DE AHORRO ============ -->
+      <section class="savings section" id="ahorro" data-veil="0.7">
+        <div class="container">
+          <p class="eyebrow" data-reveal>Calcula tu ahorro</p>
+          <h2 class="h2" data-split>¿Cuántos paneles <span class="hl">necesita tu techo</span>?</h2>
+          <div class="calc">
+            <div class="calc__inputs">
+              <div class="calc__field">
+                <label for="c-bill">¿Cuánto pagas de luz cada bimestre?</label>
+                <output data-val="bill">$3,000</output>
+                <input type="range" id="c-bill" min="500" max="30000" step="100" value="3000" />
+              </div>
+              <div class="calc__field">
+                <label for="c-kwh">Consumo por bimestre <small>(viene en tu recibo)</small></label>
+                <output data-val="kwh">900 kWh</output>
+                <input type="range" id="c-kwh" min="200" max="8000" step="50" value="900" />
+              </div>
+              <details class="more">
+                <summary><span>Cómo lo calculamos</span><i aria-hidden="true"></i></summary>
+                <div class="more__body">
+                  <p>Si no ajustas el consumo, lo estimamos con tu pago (unos $3.30 por kWh). Usamos 5.8 horas solares pico, paneles de 550 W y 78 % de rendimiento real (calor, cableado e inversor). El ahorro supone que el sistema cubre el 95 % de tu recibo; a 25 años no contamos aumentos de tarifa ni el desgaste de los paneles. Es una estimación: la cifra exacta la damos en la visita técnica.</p>
+                </div>
+              </details>
+            </div>
+            <div class="calc__results" aria-live="polite">
+              <div>
+                <p class="calc__big"><span data-out="panels">0</span><small>paneles</small></p>
+                <p class="calc__sub"><span data-out="kwp">0</span> kWp · aprox. <span data-out="area">0</span> m² de techo</p>
+              </div>
+              <dl class="calc__grid">
+                <div><dt>Ahorro al año</dt><dd data-out="save">$0</dd></div>
+                <div><dt>CO₂ evitado al año</dt><dd><span data-out="co2">0</span> t</dd></div>
+              </dl>
+              <div class="bill">
+                <p class="bill__title">Tu recibo de CFE cada bimestre</p>
+                <div class="bill__row">
+                  <span>Hoy</span>
+                  <i class="bill__bar bill__bar--now"><b></b></i>
+                  <output data-out="now">$0</output>
+                </div>
+                <div class="bill__row">
+                  <span>Con solar</span>
+                  <i class="bill__bar bill__bar--sun"><b></b></i>
+                  <output data-out="after">$0</output>
+                </div>
+                <p class="bill__total">En 25 años dejas de pagar aprox. <b data-out="save25">$0</b></p>
+              </div>
+              <p class="calc__legal">Estimación con supuestos generales para Ciudad Juárez. No es una cotización: la cifra exacta sale de tu recibo de CFE y de la visita técnica.</p>
+              <a class="btn btn--gold btn--block" href="#contacto" data-calc-quote>Quiero mi cotización exacta <svg aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PREGUNTAS FRECUENTES ============ -->
+      <section class="faq section" id="preguntas" data-veil="0.85">
+        <div class="container faq__grid">
+          <div class="faq__intro">
+            <p class="eyebrow" data-reveal>Preguntas frecuentes</p>
+            <h2 class="h2" data-split>Lo que todos preguntan antes de empezar.</h2>
+            <p data-reveal>¿Otra duda? <a class="link" href="https://wa.me/526561031243?text=Hola%2C%20tengo%20una%20pregunta" target="_blank" rel="noopener">Pregúntanos por WhatsApp</a>.</p>
+          </div>
+          <div class="faq__list">
+            <details>
+              <summary>¿Cuánto cuesta un sistema de paneles solares?<i aria-hidden="true"></i></summary>
+              <p>Depende de tu consumo, de tu techo y de si quieres baterías. Hacemos una visita técnica sin costo y te damos una cotización exacta, sin compromiso.</p>
+            </details>
+            <details>
+              <summary>¿Qué es la interconexión con CFE?<i aria-hidden="true"></i></summary>
+              <p>Es el contrato que permite que tu sistema trabaje junto con la red. Lo que generas de día se descuenta de tu consumo y CFE cambia tu medidor por uno bidireccional. Nosotros hacemos el trámite.</p>
+            </details>
+            <details>
+              <summary>¿Qué pasa si se va la luz?<i aria-hidden="true"></i></summary>
+              <p>Un sistema interconectado se apaga por seguridad cuando falla la red. Si necesitas luz durante un apagón, la opción es un sistema híbrido con baterías o un generador.</p>
+            </details>
+            <details>
+              <summary>¿Cuánto tarda la instalación?<i aria-hidden="true"></i></summary>
+              <p>Tu sistema queda funcionando en un máximo de 20 días. La instalación física toma de uno a pocos días; el resto es ingeniería, material y el trámite con CFE.</p>
+            </details>
+            <details>
+              <summary>¿Qué mantenimiento necesitan los paneles?<i aria-hidden="true"></i></summary>
+              <p>Muy poco: limpieza periódica (en Juárez el polvo es lo que más afecta) y una revisión del sistema. Nosotros ofrecemos ese servicio.</p>
+            </details>
+            <details>
+              <summary>¿Me conviene si tengo tarifa DAC?<i aria-hidden="true"></i></summary>
+              <p>Sí, es de los casos donde más rápido se recupera la inversión. En tarifa DAC cada kWh cuesta mucho más, y un sistema bien dimensionado baja tu consumo de la red.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ATARDECER · CONTACTO ============ -->
+      <section class="contact" id="contacto" data-veil="0.2">
+        <div class="container contact__grid">
+          <div class="contact__intro">
+            <p class="eyebrow" data-reveal>Atardecer · Tu batería, llena</p>
+            <h2 class="display" data-split>¿Listo para pagar <span class="hl">menos luz</span>?</h2>
+            <p class="lead" data-reveal>Hoy el sol de Juárez llenó la batería de un sistema de casa. Mañana puede ser el tuyo. Agenda tu visita técnica: es sin costo y sin compromiso.</p>
+            <ul class="contact__list" data-reveal>
+              <li><span>Teléfono</span><a href="tel:+526561031243">656 103 1243</a></li>
+              <li><span>WhatsApp</span><a href="https://wa.me/526561031243?text=Hola%20ASR%20Renovables%2C%20vengo%20desde%20tu%20p%C3%A1gina%20web%2C%20me%20interesa%20hacer%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener">Enviar mensaje</a></li>
+              <li><span>Correo</span><a href="mailto:aerorenovables@gmail.com">aerorenovables@gmail.com</a></li>
+            </ul>
+          </div>
+
+          <!-- Envío directo al correo con FormSubmit. La 1.ª vez llega un correo de activación a aerorenovables@gmail.com: hay que dar clic en "Activate Form". -->
+          <form class="quote" data-reveal novalidate data-endpoint="https://formsubmit.co/ajax/aerorenovables@gmail.com" data-wa="526561031243">
+            <h3>Solicita tu cotización</h3>
+            <div class="field">
+              <label for="q-name">Nombre</label>
+              <input id="q-name" name="nombre" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="q-phone">Teléfono</label>
+              <input id="q-phone" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required />
+            </div>
+            <fieldset class="field">
+              <legend>Tipo de proyecto</legend>
+              <div class="pills">
+                <label><input type="radio" name="tipo" value="Residencial" checked /><span>Casa</span></label>
+                <label><input type="radio" name="tipo" value="Comercial" /><span>Comercio</span></label>
+                <label><input type="radio" name="tipo" value="Industrial" /><span>Industria</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="field">
+              <legend>Servicio</legend>
+              <div class="pills">
+                <label><input type="checkbox" name="servicio" value="Paneles solares" checked /><span>Paneles solares</span></label>
+                <label><input type="checkbox" name="servicio" value="Servicios eléctricos" /><span>Eléctrico</span></label>
+                <label><input type="checkbox" name="servicio" value="HVAC" /><span>Clima</span></label>
+                <label><input type="checkbox" name="servicio" value="Generadores eléctricos" /><span>Generador</span></label>
+              </div>
+            </fieldset>
+            <div class="field">
+              <label for="q-msg">Cuéntanos de tu proyecto <small>(opcional)</small></label>
+              <textarea id="q-msg" name="mensaje" rows="3"></textarea>
+            </div>
+            <button type="button" class="btn btn--wa btn--block" data-wa-send><svg class="i-wa" aria-hidden="true"><use href="#i-wa" /></svg>Enviar por WhatsApp</button>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button type="submit" class="btn btn--ghost btn--block">Enviar por correo</button>
+            <p class="quote__note" role="status" aria-live="polite">Te contactamos para agendar tu visita.</p>
+            <p class="quote__legal">Al enviar aceptas el <a href="aviso-privacidad.html" target="_blank">aviso de privacidad</a>.</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <a href="#inicio" class="footer__brand" aria-label="ASR Renovables, volver al inicio">
+          <img class="footer__logo" src="img/logo/logo-light.png" alt="ASR Renovables" width="900" height="740" loading="lazy" />
+        </a>
+        <p class="footer__tagline">Paga menos luz con el sol de Juárez.</p>
+
+        <div class="footer__actions">
+          <a class="footer__btn" href="tel:+526561031243">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg>
+            Llamar
+          </a>
+          <a class="footer__btn footer__btn--wa" href="https://wa.me/526561031243?text=Hola%20ASR%20Renovables%2C%20vengo%20desde%20tu%20p%C3%A1gina%20web%2C%20me%20interesa%20hacer%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener">
+            <svg class="i-wa" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa" /></svg>
+            WhatsApp
+          </a>
+          <a class="footer__btn" href="mailto:aerorenovables@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+            Correo
+          </a>
+        </div>
+
+        <nav class="footer__nav" aria-label="Pie de página">
+          <a href="#soluciones">Paneles solares</a>
+          <a href="#servicios">Eléctrico y clima</a>
+          <a href="#proyectos">Proyectos</a>
+          <a href="#ahorro">Calcula tu ahorro</a>
+          <a href="#preguntas">Preguntas</a>
+        </nav>
+
+        <ul class="footer__info">
+          <li><a href="tel:+526561031243">656 103 1243</a></li>
+          <li><a href="mailto:aerorenovables@gmail.com">aerorenovables@gmail.com</a></li>
+          <li>Ciudad Juárez, Chihuahua</li>
+        </ul>
+      </div>
+      <div class="container footer__bottom">
+        <p>© <span data-year>2026</span> ASR Renovables · <a href="aviso-privacidad.html">Aviso de privacidad</a></p>
+        <a href="#inicio" class="footer__top">Volver al amanecer <span aria-hidden="true">↑</span></a>
+      </div>
+    </footer>
+
+    <!-- visor de fotos de proyectos -->
+    <dialog class="lightbox" aria-label="Foto del proyecto">
+      <button type="button" class="lightbox__close" aria-label="Cerrar">×</button>
+      <img alt="" />
+      <p class="lightbox__cap"></p>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
