@@ -587,8 +587,17 @@ if (google?.dataset.google) {
   google.hidden = false;
 }
 
+const rateDialog = $('.rate-dialog');
 const rateForm = $('.rate-form');
 const rateNote = $('.rate-form__note');
+$('[data-rate-open]')?.addEventListener('click', () => {
+  rateNote.textContent = '';
+  rateDialog.showModal();
+  lenis?.stop();
+});
+rateDialog.addEventListener('close', () => lenis?.start());
+$('.rate-dialog__close').addEventListener('click', () => rateDialog.close());
+rateDialog.addEventListener('click', (e) => e.target === rateDialog && rateDialog.close());
 rateForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   if ($('.hp', rateForm).value) return; // bot
@@ -622,6 +631,7 @@ rateForm?.addEventListener('submit', async (e) => {
     });
     rateForm.reset();
     rateNote.textContent = '¡Gracias! Recibimos tu reseña y la publicaremos después de revisarla.';
+    setTimeout(() => rateDialog.open && rateDialog.close(), 2600);
   } catch {
     rateNote.textContent = 'No se pudo enviar. Mándanos tu reseña por WhatsApp, por favor.';
   } finally {

@@ -442,47 +442,12 @@
           <div class="rate" data-reveal>
             <div class="rate__copy">
               <h3>¿Ya eres cliente de ASR?</h3>
-              <p data-reviews-empty>Estamos juntando las primeras reseñas de nuestros clientes. Tu opinión ayuda a otras familias de Juárez a decidirse por el sol.</p>
-              <p>Revisamos cada reseña antes de publicarla y solo usamos el nombre con el que quieras aparecer.</p>
-              <div class="rate__alt">
-                <a class="btn btn--ghost btn--sm" data-google href="" target="_blank" rel="noopener" hidden>Reseñar en Google <svg aria-hidden="true"><use href="#i-arrow" /></svg></a>
-                <a class="rate__wa" href="https://wa.me/526561031243?text=Hola%2C%20quiero%20dejar%20mi%20rese%C3%B1a" target="_blank" rel="noopener"><svg class="i-wa" aria-hidden="true"><use href="#i-wa" /></svg>¿Prefieres WhatsApp?</a>
-              </div>
+              <p data-reviews-empty>Tu opinión ayuda a otras familias de Juárez a decidirse por el sol.</p>
             </div>
-
-            <form class="rate-form" novalidate data-endpoint="https://formsubmit.co/ajax/aerorenovables@gmail.com">
-              <fieldset class="field">
-                <legend>Tu calificación</legend>
-                <div class="stars-input" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
-                  <label><input type="radio" name="estrellas" value="1" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">1 estrella</span></label>
-                  <label><input type="radio" name="estrellas" value="2" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">2 estrellas</span></label>
-                  <label><input type="radio" name="estrellas" value="3" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">3 estrellas</span></label>
-                  <label><input type="radio" name="estrellas" value="4" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">4 estrellas</span></label>
-                  <label><input type="radio" name="estrellas" value="5" checked /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">5 estrellas</span></label>
-                </div>
-              </fieldset>
-              <div class="field">
-                <label for="r-name">Nombre con el que quieres aparecer</label>
-                <input id="r-name" name="nombre" type="text" autocomplete="name" placeholder="Ej. Familia Rodríguez" required />
-              </div>
-              <fieldset class="field">
-                <legend>¿Qué instalamos?</legend>
-                <div class="pills">
-                  <label><input type="radio" name="sistema" value="Sistema residencial" checked /><span>Casa</span></label>
-                  <label><input type="radio" name="sistema" value="Sistema comercial" /><span>Comercio</span></label>
-                  <label><input type="radio" name="sistema" value="Sistema industrial" /><span>Industria</span></label>
-                  <label><input type="radio" name="sistema" value="Servicio eléctrico o clima" /><span>Eléctrico / clima</span></label>
-                </div>
-              </fieldset>
-              <div class="field">
-                <label for="r-msg">Tu reseña</label>
-                <textarea id="r-msg" name="resena" rows="3" maxlength="400" required placeholder="¿Cómo te fue? ¿Cuánto bajó tu recibo?"></textarea>
-              </div>
-              <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
-              <label class="consent"><input type="checkbox" name="autorizo" required /><span>Autorizo a ASR Renovables a publicar mi reseña en su sitio con el nombre que escribí. <a href="aviso-privacidad.html" target="_blank">Aviso de privacidad</a></span></label>
-              <button type="submit" class="btn btn--gold btn--block">Enviar mi reseña</button>
-              <p class="rate-form__note" role="status" aria-live="polite"></p>
-            </form>
+            <div class="rate__actions">
+              <button type="button" class="btn btn--gold" data-rate-open>Agregar reseña</button>
+              <a class="btn btn--ghost btn--sm" data-google href="" target="_blank" rel="noopener" hidden>Reseñar en Google <svg aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
           </div>
         </div>
       </section>
@@ -783,6 +748,47 @@
         <a href="#inicio" class="footer__top">Volver al amanecer <span aria-hidden="true">↑</span></a>
       </div>
     </footer>
+
+    <!-- reseña: ventana para dejar la tuya -->
+    <dialog class="rate-dialog" aria-labelledby="rate-title">
+      <button type="button" class="rate-dialog__close" aria-label="Cerrar">×</button>
+      <h3 id="rate-title">Cuéntanos cómo te fue</h3>
+      <p class="rate-dialog__sub">Revisamos cada reseña antes de publicarla.</p>
+    <form class="rate-form" novalidate data-endpoint="https://formsubmit.co/ajax/aerorenovables@gmail.com">
+      <fieldset class="field">
+        <legend>Tu calificación</legend>
+        <div class="stars-input" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
+          <label><input type="radio" name="estrellas" value="1" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">1 estrella</span></label>
+          <label><input type="radio" name="estrellas" value="2" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">2 estrellas</span></label>
+          <label><input type="radio" name="estrellas" value="3" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">3 estrellas</span></label>
+          <label><input type="radio" name="estrellas" value="4" /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">4 estrellas</span></label>
+          <label><input type="radio" name="estrellas" value="5" checked /><svg aria-hidden="true"><use href="#i-star" /></svg><span class="sr">5 estrellas</span></label>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="r-name">Nombre con el que quieres aparecer</label>
+        <input id="r-name" name="nombre" type="text" autocomplete="name" placeholder="Ej. Familia Rodríguez" required />
+      </div>
+      <fieldset class="field">
+        <legend>¿Qué instalamos?</legend>
+        <div class="pills">
+          <label><input type="radio" name="sistema" value="Sistema residencial" checked /><span>Casa</span></label>
+          <label><input type="radio" name="sistema" value="Sistema comercial" /><span>Comercio</span></label>
+          <label><input type="radio" name="sistema" value="Sistema industrial" /><span>Industria</span></label>
+          <label><input type="radio" name="sistema" value="Servicio eléctrico o clima" /><span>Eléctrico / clima</span></label>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="r-msg">Tu reseña</label>
+        <textarea id="r-msg" name="resena" rows="3" maxlength="400" required placeholder="¿Cómo te fue? ¿Cuánto bajó tu recibo?"></textarea>
+      </div>
+      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <label class="consent"><input type="checkbox" name="autorizo" required /><span>Autorizo a ASR Renovables a publicar mi reseña en su sitio con el nombre que escribí. <a href="aviso-privacidad.html" target="_blank">Aviso de privacidad</a></span></label>
+      <button type="submit" class="btn btn--gold btn--block">Enviar mi reseña</button>
+      <p class="rate-form__note" role="status" aria-live="polite"></p>
+    </form>
+      <a class="rate__wa" href="https://wa.me/526561031243?text=Hola%20ASR%20Renovables%2C%20quiero%20dejar%20mi%20rese%C3%B1a" target="_blank" rel="noopener"><svg class="i-wa" aria-hidden="true"><use href="#i-wa" /></svg>¿Prefieres WhatsApp?</a>
+    </dialog>
 
     <!-- visor de fotos de proyectos -->
     <dialog class="lightbox" aria-label="Foto del proyecto">

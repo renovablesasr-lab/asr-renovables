@@ -3404,3 +3404,233 @@ body.menu-open .dock > * {
   padding: 1.5px;
   background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), #f6c870, rgba(246, 200, 112, 0.35) 40%, transparent 70%);
 }
+
+/* ---------- reseñas: llamada simple + ventana ---------- */
+.rate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px 32px;
+  padding: clamp(18px, 2.4vw, 28px) clamp(20px, 3vw, 36px);
+}
+.rate__copy {
+  gap: 6px;
+  max-width: 52ch;
+}
+.rate__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.rate__actions [hidden] {
+  display: none;
+}
+.rate-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(480px, calc(100vw - 24px));
+  max-height: min(92dvh, 780px);
+  padding: clamp(20px, 3vw, 30px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line-2);
+  border-radius: 24px;
+  background: linear-gradient(180deg, #14100a, #0b0e12 40%);
+  color: var(--cream);
+  box-shadow: 0 40px 120px -20px rgba(0, 0, 0, 0.9);
+}
+.rate-dialog::backdrop {
+  background: rgba(3, 4, 6, 0.78);
+  backdrop-filter: blur(6px);
+}
+.rate-dialog[open] {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  animation: moreIn 0.35s var(--ease);
+}
+.rate-dialog h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  padding-right: 40px;
+}
+.rate-dialog__sub {
+  margin-top: -8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.rate-dialog__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: rgba(243, 238, 228, 0.06);
+  color: var(--cream);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.rate-dialog .rate-form {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  gap: 14px;
+}
+.rate-dialog .stars-input {
+  justify-content: flex-start;
+}
+.rate-dialog .stars-input svg {
+  width: 34px;
+  height: 34px;
+}
+.rate-dialog .rate__wa {
+  justify-self: center;
+}
+@media (max-width: 600px) {
+  .rate {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .rate__copy {
+    max-width: none;
+  }
+  .rate__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rate-dialog {
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 94dvh;
+    border-radius: 24px 24px 0 0;
+    border-bottom: 0;
+  }
+}
+
+/* ---------- calculadora más compacta ---------- */
+.savings.section {
+  padding-block: clamp(44px, 7vh, 84px);
+}
+.savings .calc {
+  margin-top: clamp(16px, 3vh, 28px);
+}
+@media (min-width: 901px) {
+  .calc__inputs,
+  .calc__results {
+    padding: clamp(18px, 3.4vh, 34px) clamp(24px, 3vw, 40px);
+  }
+  .calc__inputs {
+    gap: clamp(18px, 3vh, 26px);
+  }
+  .calc__results {
+    gap: clamp(10px, 1.8vh, 16px);
+  }
+  .calc__big {
+    font-size: clamp(48px, 10vh, 92px);
+  }
+  .calc__sub {
+    margin-top: 6px;
+    font-size: 15px;
+  }
+  .calc__grid div {
+    padding: 10px 14px;
+  }
+  .calc__grid dd {
+    font-size: clamp(20px, 2vw, 24px);
+  }
+  .bill {
+    gap: 8px;
+    padding: 12px 16px;
+  }
+  .calc__legal {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 900px) {
+  .calc__inputs,
+  .calc__results {
+    padding: 20px 18px;
+    gap: 16px;
+  }
+  .calc__inputs {
+    gap: 18px;
+  }
+  .calc__big {
+    font-size: clamp(56px, 18vw, 80px);
+  }
+  .calc__sub {
+    margin-top: 6px;
+    font-size: 14px;
+  }
+  .calc__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .calc__grid div {
+    padding: 12px 14px;
+  }
+  .calc__grid dd {
+    font-size: 22px;
+  }
+  .calc__legal {
+    font-size: 12px;
+  }
+  .calc__field output {
+    font-size: 22px;
+  }
+}
+
+/* pantallas bajas (laptops): que la calculadora quepa completa */
+.savings .h2 {
+  font-size: clamp(26px, min(3.6vw, 5.4vh), 46px);
+}
+@media (min-width: 901px) and (max-height: 780px) {
+  .savings.section {
+    padding-block: 32px 28px;
+  }
+  .savings .calc {
+    margin-top: 14px;
+  }
+  .calc__inputs,
+  .calc__results {
+    padding: 16px 28px;
+  }
+  .calc__results {
+    gap: 8px;
+  }
+  .calc__big {
+    font-size: 56px;
+  }
+  .calc__sub {
+    margin-top: 4px;
+  }
+  .calc__grid div {
+    padding: 8px 12px;
+  }
+  .bill {
+    gap: 6px;
+    padding: 10px 14px;
+  }
+  .bill__total {
+    margin-top: 0;
+  }
+  .calc__legal {
+    padding: 6px 10px;
+    font-size: 11.5px;
+  }
+  .calc .btn {
+    padding-block: 12px;
+  }
+}
