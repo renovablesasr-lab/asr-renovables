@@ -1,7 +1,6 @@
 import '@fontsource-variable/sora';
 import '@fontsource-variable/inter';
 import '@fontsource/cinzel/400.css';
-import '@fontsource/cinzel/600.css';
 import './styles/main.css';
 
 import gsap from 'gsap';
@@ -57,50 +56,68 @@ const paintLoader = () => {
   loaderNum.textContent = Math.round(loadState.v);
   loaderBar.style.transform = `scaleX(${loadState.v / 100})`;
 };
-const fakeLoad = gsap.to(loadState, { v: 88, duration: 2.4, ease: 'power2.out', onUpdate: paintLoader });
+const fakeLoad = gsap.to(loadState, { v: 88, duration: 0.7, ease: 'power2.out', onUpdate: paintLoader });
 
 let scene = null;
 
 async function boot() {
-  const minTime = new Promise((r) => setTimeout(r, 1200));
-  try {
-    const { createScene } = await import('./scene.js');
-    scene = createScene($('.webgl'));
-  } catch (err) {
-    console.warn('WebGL no disponible, se usa el fondo estático.', err);
-    root.classList.add('no-webgl');
-    document.body.classList.add('no-webgl');
-  }
-  await Promise.all([document.fonts.ready, minTime]);
+  let marcarPortada;
+  const portadaLista = new Promise((r) => (marcarPortada = r));
+  // espera máxima ~0.9 s: la escena 3D se arma en paralelo y aparece cuando está lista
+  const cap = new Promise((r) => setTimeout(r, reduced ? 0 : 700));
+  const fontsOrTimeout = Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 900))]);
+  // el código 3D se descarga ya, pero la escena se arma cuando la portada ya se puede usar
+  const sceneModule = import('./scene.js');
+  const sceneReady = sceneModule
+    .then((mod) => portadaLista.then(() => new Promise((r) => (window.requestIdleCallback || setTimeout)(() => r(mod), { timeout: 600 }))))
+    .then(({ createScene }) => {
+      scene = createScene($('.webgl'));
+      const max = document.documentElement.scrollHeight - innerHeight;
+      scene.setProgress(max > 0 ? scrollY / max : 0, true);
+      return scene.ready;
+    })
+    .then(() => root.classList.add('scene-ready'))
+    .catch((err) => {
+      console.warn('WebGL no disponible, se usa el fondo estático.', err);
+      root.classList.add('no-webgl');
+      document.body.classList.add('no-webgl');
+    });
 
+  await Promise.all([fontsOrTimeout, cap]);
   fakeLoad.kill();
-  await gsap.to(loadState, { v: 100, duration: 0.4, ease: 'power1.out', onUpdate: paintLoader }).then();
+  await gsap.to(loadState, { v: 100, duration: 0.25, ease: 'power1.out', onUpdate: paintLoader }).then();
 
   initAnimations();
   initScrollWorld();
   initNavTriggers();
   ScrollTrigger.refresh();
-  introTimeline();
+  const intro = introTimeline();
+  intro.then(() => marcarPortada());
+  sceneReady.then(() => {
+    ScrollTrigger.refresh();
+    if (!reduced) scene?.flash?.();
+  });
 }
 
 function introTimeline() {
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
-  tl.to('.loader__inner', { opacity: 0, y: -20, duration: 0.5, ease: 'power2.in' })
-    .to('.loader', { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut' }, '-=0.1')
+  tl.to('.loader__inner', { opacity: 0, y: -12, duration: 0.3, ease: 'power2.in' })
+    .to('.loader', { clipPath: 'inset(0 0 100% 0)', duration: 0.7, ease: 'expo.inOut' }, '-=0.05')
     .set('.loader', { display: 'none' })
     .call(() => {
       // la página se puede usar en cuanto se va el loader
       document.body.classList.remove('is-loading');
       lenis?.start();
     });
-  if (reduced) return;
-  tl.from('.hero__asr', { yPercent: 110, duration: 1.4 }, '-=0.6')
-    .from('.hero__ren', { yPercent: 110, duration: 1.4 }, '-=1.25')
-    .from('.hero__eyebrow', { opacity: 0, y: 20, duration: 1 }, '-=1.2')
-    .from('.hero__lead', { opacity: 0, y: 26, duration: 1.1 }, '-=1')
-    .fromTo('.hero__actions > *', { opacity: 0, y: 26 }, { opacity: 1, y: 0, stagger: 0.08, duration: 1 }, '-=0.9')
-    .from('.hero__trust li', { opacity: 0, y: 12, stagger: 0.06, duration: 0.8 }, '-=0.8')
-    .from('.scroll-cue', { opacity: 0, duration: 1 }, '-=0.5');
+  if (reduced) return tl;
+  tl.from('.hero__asr', { yPercent: 110, duration: 0.9 }, '-=0.45')
+    .from('.hero__ren', { yPercent: 110, duration: 0.9 }, '-=0.8')
+    .from('.hero__eyebrow', { opacity: 0, y: 14, duration: 0.6 }, '-=0.75')
+    .from('.hero__lead', { opacity: 0, y: 18, duration: 0.7 }, '-=0.6')
+    .fromTo('.hero__actions > *', { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.06, duration: 0.6 }, '-=0.5')
+    .from('.hero__trust li', { opacity: 0, y: 10, stagger: 0.05, duration: 0.5 }, '-=0.4')
+    .from('.scroll-cue', { opacity: 0, duration: 0.6 }, '-=0.3');
+  return tl;
 }
 
 /* =========================================================
@@ -136,16 +153,35 @@ let chargeTimer;
 function renderEquiv() {
   const e = EQUIV[eqIdx];
   const v = energy / e.per;
-  H.eqN.textContent = v >= 100 ? Math.round(v).toLocaleString('es-MX') : v.toFixed(v < 10 ? 1 : 0);
-  H.eqU.textContent = e.unit;
+  setText(H.eqN, v >= 100 ? Math.round(v).toLocaleString('es-MX') : v.toFixed(v < 10 ? 1 : 0));
+  setText(H.eqU, e.unit);
 }
+
+let wasFull = false;
+function celebrate() {
+  if (reduced) return;
+  document.body.classList.remove('celebrate');
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('celebrate')));
+  if (navigator.vibrate) navigator.vibrate([12, 40, 18]);
+  setTimeout(() => document.body.classList.remove('celebrate'), 1300);
+}
+
+// solo se toca el texto que cambió: evita recalcular el diseño en cada cuadro del scroll
+const setText = (el, v) => {
+  if (el.textContent !== v) el.textContent = v;
+};
+const setVar = (name, v) => {
+  if (hud.style.getPropertyValue(name) !== v) hud.style.setProperty(name, v);
+};
 
 function updateHud(t) {
   // 06:15 → 20:10 (verano en Ciudad Juárez)
   const mins = 6 * 60 + 15 + t * (13 * 60 + 55);
-  H.time.textContent = `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(Math.floor(mins % 60)).padStart(2, '0')}`;
-  H.label.textContent =
-    t < 0.1 ? 'Amanecer' : t < 0.36 ? 'Mañana' : t < 0.62 ? 'Mediodía' : t < 0.9 ? 'Tarde' : 'Atardecer';
+  setText(H.time, `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(Math.floor(mins % 60)).padStart(2, '0')}`);
+  setText(
+    H.label,
+    t < 0.1 ? 'Amanecer' : t < 0.36 ? 'Mañana' : t < 0.62 ? 'Mediodía' : t < 0.9 ? 'Tarde' : 'Atardecer'
+  );
 
   // el sol recorre el arco de oriente a poniente
   const a = Math.PI * t;
@@ -157,10 +193,10 @@ function updateHud(t) {
   // la producción sigue la curva del sol: energía acumulada = (1 − cos πt) / 2
   const charge = t >= 0.999 ? 1 : (1 - Math.cos(a)) / 2;
   energy = DAY_KWH * charge;
-  hud.style.setProperty('--charge', charge.toFixed(4));
-  hud.style.setProperty('--sun', Math.sin(a).toFixed(3));
+  setVar('--charge', charge.toFixed(3));
+  setVar('--sun', Math.sin(a).toFixed(2));
   const pct = Math.round(charge * 100);
-  H.pct.textContent = `${pct}%`;
+  setText(H.pct, `${pct}%`);
   // cada 10 % que sube, el número da un salto
   const decade = Math.floor(pct / 10);
   if (decade > lastDecade && lastDecade >= 0) {
@@ -169,11 +205,15 @@ function updateHud(t) {
     H.pct.classList.add('is-bump');
   }
   lastDecade = decade;
-  H.kwh.textContent = energy.toFixed(1);
+  setText(H.kwh, energy.toFixed(1));
 
   const full = charge >= 0.995;
   hud.classList.toggle('is-full', full);
-  H.state.textContent = full
+  if (full && !wasFull) celebrate();
+  wasFull = full;
+  setText(
+    H.state,
+    full
     ? 'Llena con el sol de hoy ✓'
     : t < 0.1
       ? 'Todavía no sale el sol'
@@ -181,7 +221,8 @@ function updateHud(t) {
         ? 'Ya empezó a cargar'
         : t < 0.62
           ? 'Sol a todo lo que da'
-          : 'Ya casi se llena';
+          : 'Ya casi se llena'
+  );
 
   // mientras bajas, el rayo indica que se está cargando
   if (t > lastT + 0.0005 && !full) {
@@ -234,9 +275,10 @@ function initScrollWorld() {
     const active = veilTriggers.find((t) => t.isActive);
     if (!active) return;
     const v = parseFloat(active.trigger.dataset.veil);
-    if (v === currentVeil) return;
+    if (v === currentVeil && document.body.dataset.hour === (active.trigger.dataset.hour || '')) return;
     currentVeil = v;
-    gsap.to(veil, { opacity: v, duration: 1, ease: 'power2.out', overwrite: true });
+    document.body.dataset.hour = active.trigger.dataset.hour || '';
+    gsap.to(veil, { opacity: v, duration: 0.9, ease: 'power2.inOut', overwrite: true });
   }
   syncVeil();
 
@@ -357,7 +399,6 @@ function initAnimations() {
     const split = SplitText.create(el, { type: 'lines', linesClass: 'split-line-inner', mask: 'lines' });
     gsap.from(split.lines, {
       yPercent: 110,
-      filter: 'blur(10px)',
       duration: 1.2,
       ease: 'expo.out',
       stagger: 0.08,
@@ -378,13 +419,13 @@ function initAnimations() {
 
   /* tarjetas en grupo */
   ScrollTrigger.batch('[data-card], .project, .sun__stat', {
-    start: 'top 92%',
+    start: 'top 88%',
     once: true,
     onEnter: (els) =>
       gsap.fromTo(
         els,
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.09, duration: 1.1, ease: 'expo.out', overwrite: true, clearProps: 'transform' }
+        { y: 24, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.07, duration: 0.6, ease: 'power3.out', overwrite: true, clearProps: 'transform' }
       ),
   });
   gsap.set('[data-card], .project, .sun__stat', { opacity: 0 });
@@ -430,7 +471,40 @@ function initAnimations() {
       },
     });
   }
+
+  /* la cinta de marcas no corre fuera de pantalla */
+  if (track && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => track.classList.toggle('is-off', !e.isIntersecting)).observe(track);
+  }
+
+  /* fotos de proyectos: entran con un acercamiento suave */
+  $$('.project__media img').forEach((img) => {
+    gsap.fromTo(
+      img,
+      { scale: 1.06 },
+      { scale: 1, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: img, start: 'top 90%', once: true } }
+    );
+  });
+
+  /* línea de luz al inicio de cada sección */
+  $$('.section').forEach((sec) =>
+    ScrollTrigger.create({ trigger: sec, start: 'top 85%', once: true, onEnter: () => sec.classList.add('is-in') })
+  );
 }
+
+/* deslizadores de la calculadora: vibración ligera al cruzar cada escalón (Android) */
+[['c-bill', 1000], ['c-kwh', 100]].forEach(([id, step]) => {
+  const r = document.getElementById(id);
+  if (!r) return;
+  let last = Math.floor(r.value / step);
+  r.addEventListener('input', () => {
+    const now = Math.floor(r.value / step);
+    if (now !== last) {
+      last = now;
+      if (!reduced && navigator.vibrate) navigator.vibrate(6);
+    }
+  });
+});
 
 /* =========================================================
    Proyectos: filtro por tipo y visor de fotos
@@ -501,6 +575,12 @@ function readForm() {
   const phoneOk = phone.replace(/\D/g, '').length >= 10;
   nameEl.classList.toggle('is-invalid', !name);
   phoneEl.classList.toggle('is-invalid', !phoneOk);
+  form.classList.remove('is-sent');
+  if (!name || !phoneOk) {
+    form.classList.remove('is-shake');
+    void form.offsetWidth;
+    form.classList.add('is-shake');
+  }
   if (!name || !phoneOk) {
     note.textContent = 'Escribe tu nombre y un teléfono de 10 dígitos.';
     (!name ? nameEl : phoneEl).focus();
@@ -535,6 +615,7 @@ form.addEventListener('submit', async (e) => {
     try {
       await sendMail(endpoint, { ...d, _subject: `Cotización · ${d.tipo} · ${d.nombre}`, _template: 'table' });
       form.reset();
+      form.classList.add('is-sent');
       note.textContent = '¡Listo, ya nos llegó! Te llamamos para agendar tu visita.';
     } catch {
       note.textContent = 'No se envió, perdón. Escríbenos por WhatsApp o llámanos al 656 103 1243.';

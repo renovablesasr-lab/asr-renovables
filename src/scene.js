@@ -128,6 +128,12 @@ export function createScene(canvas, opts = {}) {
     opts.lowPower ??
     (window.matchMedia('(max-width: 820px)').matches ||
       (navigator.hardwareConcurrency || 8) <= 4);
+  // equipos muy modestos (o modo ahorro de datos): sin bloom y densidad 1
+  const conn = navigator.connection || {};
+  const veryLow =
+    opts.veryLow ??
+    (lowPower &&
+      ((navigator.deviceMemory || 8) <= 4 || (navigator.hardwareConcurrency || 8) <= 4 || conn.saveData === true));
 
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -135,7 +141,7 @@ export function createScene(canvas, opts = {}) {
     powerPreference: 'high-performance',
     alpha: false,
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1.25 : 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, veryLow ? 1 : lowPower ? 1.25 : 1.75));
   renderer.setSize(window.innerWidth, window.innerHeight, false);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
@@ -404,6 +410,22 @@ export function createScene(canvas, opts = {}) {
   const facade = facadeTexture();
   const roofMat = new THREE.MeshStandardMaterial({ color: '#d9d5cd', roughness: 0.95 });
   const wallMat = new THREE.MeshStandardMaterial({ map: facade, roughness: 0.95 });
+  {
+    const c = document.createElement('canvas');
+    c.width = 128;
+    c.height = 128;
+    const g = c.getContext('2d');
+    g.fillStyle = '#000000';
+    g.fillRect(0, 0, 128, 128);
+    g.fillStyle = '#ffb867';
+    g.fillRect(14, 40, 26, 30);
+    g.fillRect(88, 40, 26, 30);
+    const glow = new THREE.CanvasTexture(c);
+    glow.colorSpace = THREE.SRGBColorSpace;
+    wallMat.emissiveMap = glow;
+    wallMat.emissive = new THREE.Color('#ffffff');
+    wallMat.emissiveIntensity = 0;
+  }
   const houseGeo = new THREE.BoxGeometry(1, 1, 1);
   houseGeo.translate(0, 0.5, 0);
   const homes = houses.filter((hs) => !hs.industrial && !hs.commercial);
@@ -608,6 +630,7 @@ export function createScene(canvas, opts = {}) {
   if (lowPower) bloom.resolution.set(window.innerWidth / 2, window.innerHeight / 2);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
+  const useComposer = !veryLow;
 
   /* ----- recorrido de cámara ----- */
   const K = (p, pos, tgt) => ({ p, pos: new THREE.Vector3(...pos), tgt: new THREE.Vector3(...tgt) });
@@ -652,10 +675,17 @@ export function createScene(canvas, opts = {}) {
   const tmpCol = new THREE.Color();
   const clock = new THREE.Clock();
   let running = true;
+  const WHITE = new THREE.Color('#ffffff');
+  const PARTICLE_DAY = new THREE.Color('#fff1c8');
+  let lastSkyP = -1;
+  let idleFrames = 0;
+  let carryDt = 0;
+  let flare = 0; // destello de la salida del sol (0..1)
+  let baseGlow = 1;
 
   function sunDirection(t, out) {
     // t: 0 amanecer (este, +x) → 1 atardecer (oeste, -x); arco por el sur (+z)
-    const a = lerp(-0.06, Math.PI + 0.04, t);
+    const a = lerp(-0.06, Math.PI - 0.06, t);
     return out.set(Math.cos(a), Math.sin(a) * 0.82, Math.sin(a) * 0.5).normalize();
   }
 
@@ -671,7 +701,8 @@ export function createScene(canvas, opts = {}) {
     skyUniforms.uGround.value.copy(SKY.dawnGround).lerp(SKY.dayGround, day);
     skyUniforms.uSunColor.value.copy(SKY.sunLow).lerp(SKY.sunHigh, day);
     skyUniforms.uSunDir.value.copy(sunDir);
-    skyUniforms.uGlow.value = 0.6 + low * 1.4;
+    baseGlow = 0.6 + low * 1.4;
+    skyUniforms.uGlow.value = baseGlow + flare * 1.1;
     skyUniforms.uStars.value = night * night * 0.8;
 
     // niebla = color del horizonte (mezcla con algo de cielo)
@@ -684,15 +715,24 @@ export function createScene(canvas, opts = {}) {
     sun.position.copy(sunDir).multiplyScalar(400);
     sun.target.position.set(0, 0, 0);
     hemi.intensity = lerp(0.35, 0.9, day);
-    hemi.color.copy(skyUniforms.uTop.value).lerp(new THREE.Color('#ffffff'), 0.5);
+    hemi.color.copy(skyUniforms.uTop.value).lerp(WHITE, 0.5);
 
     renderer.toneMappingExposure = lerp(0.88, 0.98, day);
     pMat.uniforms.uOpacity.value = lerp(0.85, 0.4, day);
-    pMat.uniforms.uColor.value.copy(SKY.sunLow).lerp(new THREE.Color('#fff1c8'), day);
+    pMat.uniforms.uColor.value.copy(SKY.sunLow).lerp(PARTICLE_DAY, day);
+
+    // S1 · al atardecer se encienden las ventanas; S2 · los paneles brillan más con el sol bajo
+    const evening = smooth(0.55, 0.92, t);
+    wallMat.emissiveIntensity = (1 - smooth(0.02, 0.24, elev)) * (0.2 + 1.1 * evening);
+    panelFront.envMapIntensity = lerp(2.4, 1.2, day);
+    panelFront.clearcoatRoughness = lerp(0.03, 0.08, day);
     bloom.strength = lerp(0.6, 0.22, day);
 
-    if (Math.abs(t - lastEnvT) > 0.012) {
-      lastEnvT = t;
+    // el mapa de reflejos es caro: se regenera por escalones, menos en equipos modestos
+    const envStep = veryLow ? 0.2 : lowPower ? 0.08 : 0.03;
+    const envT = Math.round(t / envStep) * envStep;
+    if (Math.abs(envT - lastEnvT) > 1e-4) {
+      lastEnvT = envT;
       const rt = pmrem.fromScene(envScene, 0, 1, 2000);
       scene.environment = rt.texture;
       if (envRT) envRT.dispose();
@@ -702,7 +742,18 @@ export function createScene(canvas, opts = {}) {
 
   function frame() {
     if (!running) return;
-    const dt = Math.min(clock.getDelta(), 0.05);
+    const dt = Math.min(clock.getDelta(), 0.05) + carryDt;
+    carryDt = 0;
+    const moving =
+      Math.abs(targetP - p) > 0.0002 ||
+      Math.abs(pointer.x - pointerSmooth.x) + Math.abs(pointer.y - pointerSmooth.y) > 0.001 ||
+      flare > 0.01;
+    idleFrames = moving ? 0 : idleFrames + 1;
+    // en reposo, los equipos modestos dibujan a 30 fps
+    if (lowPower && idleFrames > 20 && idleFrames % 2 === 1) {
+      carryDt = dt;
+      return;
+    }
     p += (targetP - p) * Math.min(1, dt * 3.2);
     pointerSmooth.lerp(pointer, Math.min(1, dt * 2.5));
 
@@ -715,12 +766,21 @@ export function createScene(canvas, opts = {}) {
     camera.position.copy(camPos);
     camera.lookAt(camTgt);
 
-    updateSky(0.03 + p * 0.96);
-    updateRacks(p);
+    // el cielo y los paneles solo cambian si cambió la hora
+    if (Math.abs(p - lastSkyP) > 0.0004) {
+      updateSky(0.03 + p * 0.96);
+      updateRacks(p);
+      lastSkyP = p;
+    }
+    if (flare > 0.001) {
+      flare *= Math.pow(0.12, dt); // se apaga en ~1 s
+      skyUniforms.uGlow.value = baseGlow + flare * 1.1;
+    }
     pMat.uniforms.uTime.value += dt;
     particles.position.set(camTgt.x * 0.6, 0, camTgt.z * 0.6);
 
-    composer.render(dt);
+    if (useComposer) composer.render(dt);
+    else renderer.render(scene, camera);
   }
 
   function resize() {
@@ -741,12 +801,24 @@ export function createScene(canvas, opts = {}) {
   // primer cuadro sincrónico (para el loader)
   updateSky(0.03);
   updateRacks(0);
-  renderer.setAnimationLoop(frame);
+  // los shaders se compilan sin congelar la página (donde el navegador lo permite)
+  const ready = renderer
+    .compileAsync(scene, camera)
+    .catch(() => {})
+    .then(() => {
+      renderer.setAnimationLoop(frame);
+      return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    });
 
   return {
+    ready,
     setProgress(v, immediate = false) {
       targetP = clamp01(v);
       if (immediate) p = targetP;
+    },
+    /** el sol "sale": destello de ~1 s al abrir la portada */
+    flash() {
+      flare = 1;
     },
     setPointer(x, y) {
       pointer.set(x, y);
