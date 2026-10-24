@@ -173,7 +173,7 @@ function updateHud(t) {
 
   const full = charge >= 0.995;
   hud.classList.toggle('is-full', full);
-  H.state.textContent = full ? 'Batería llena ✓' : t < 0.02 ? 'Esperando el sol' : 'Cargando con el sol';
+  H.state.textContent = full ? 'Batería llena. Así queda tu casa.' : t < 0.02 ? 'Amanecer · sin sol aún' : 'Cargando con el sol';
 
   // mientras bajas, el rayo indica que se está cargando
   if (t > lastT + 0.0005 && !full) {
@@ -656,6 +656,7 @@ if (calc) {
 
   const inBill = $('#c-bill', calc);
   const inKwh = $('#c-kwh', calc);
+  const quoteLink = $('[data-calc-quote]', calc);
   const out = (k) => $(`[data-out="${k}"]`, calc);
   const shown = {};
 
@@ -679,7 +680,10 @@ if (calc) {
     animateTo('kwp', panels * PANEL_KW, (v) => fmt1.format(v));
     animateTo('area', panels * PANEL_M2, (v) => fmt.format(v));
     animateTo('save', bill * 6 * 0.95, (v) => money.format(v));
-    animateTo('co2', ((kwh * 6) / 1000) * CO2, (v) => fmt1.format(v));
+    animateTo('area2', panels * PANEL_M2, (v) => fmt.format(v));
+    quoteLink.href = `https://wa.me/526561031243?text=${encodeURIComponent(
+      `Hola ASR Renovables, usé la calculadora de su página. Pago aprox. ${money.format(bill)} al bimestre (${fmt.format(kwh)} kWh) y me salen ${panels} paneles (${fmt1.format(panels * PANEL_KW)} kWp). Quiero que revisen mi recibo.`
+    )}`;
 
     // recibo: hoy vs. con solar (el sistema cubre ~95 %)
     const after = bill * 0.05;
@@ -737,12 +741,6 @@ if (calc) {
   });
   update();
 
-  $('[data-calc-quote]', calc).addEventListener('click', () => {
-    const msg = $('#q-msg');
-    if (msg && !msg.value.trim()) {
-      msg.value = `Pago bimestral aprox. ${money.format(Number(inBill.value))}, consumo ${fmt.format(Number(inKwh.value))} kWh por bimestre. La calculadora me sugiere ${out('panels').textContent} paneles (${out('kwp').textContent} kWp).`;
-    }
-  });
 }
 
 /* =========================================================
@@ -771,6 +769,11 @@ boot();
 const quick = $('[data-quick]');
 if (quick) {
   const qIn = $('input', quick);
+  $('.hero__wa')?.addEventListener('click', (e) => {
+    const bill = Number(qIn.value.replace(/\D/g, ''));
+    const base = 'Hola ASR Renovables, quiero que revisen mi recibo de CFE.';
+    e.currentTarget.href = `https://wa.me/526561031243?text=${encodeURIComponent(bill ? `${base} Pago aprox. $${bill.toLocaleString('es-MX')} al bimestre.` : base)}`;
+  });
   const money0 = new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 });
   qIn.addEventListener('input', () => {
     const digits = qIn.value.replace(/\D/g, '').slice(0, 6);

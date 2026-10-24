@@ -3811,3 +3811,170 @@ h1.hero__lead span {
     padding: 22px 18px;
   }
 }
+
+/* =========================================================
+   Recorrido v4: portada más directa, toque cómodo, batería compacta
+   ========================================================= */
+h1.hero__lead {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 14em;
+  margin-bottom: 10px;
+}
+.hero__sub {
+  max-width: 34em;
+  margin-bottom: 26px;
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.5;
+  color: var(--muted);
+}
+.footer__rate {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 14px;
+  margin-top: 28px;
+  font-size: 14px;
+  color: var(--soft);
+}
+.footer__rate p {
+  color: inherit;
+}
+.linkbtn {
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid rgba(246, 200, 112, 0.4);
+  background: none;
+  font: inherit;
+  color: var(--gold-2);
+  cursor: pointer;
+}
+.linkbtn[hidden] {
+  display: none;
+}
+.bill__total small {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--soft);
+}
+
+@media (max-width: 900px) {
+  /* batería: una sola fila, ≤ 72 px */
+  .hud {
+    padding: 8px 14px 8px 10px;
+    gap: 10px;
+  }
+  .hud__sky {
+    width: 52px;
+  }
+  .hud__sky svg {
+    width: 52px;
+    height: 30px;
+  }
+  .hud__main {
+    gap: 3px;
+  }
+  .hud__foot .hud__eq {
+    display: none;
+  }
+  .hud__foot {
+    justify-content: flex-start;
+    font-size: 12px;
+  }
+  .hud__label,
+  .hud__state {
+    font-size: 12px;
+  }
+  .hud__state {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hud__time {
+    font-size: 12px;
+  }
+  .hud__cell {
+    height: 24px;
+  }
+
+  /* zonas de toque de 44 px */
+  .nav__brand {
+    min-height: 44px;
+  }
+  summary,
+  .filters button,
+  .pills label,
+  .pills span {
+    min-height: 44px;
+  }
+  .filters button {
+    padding-inline: 18px;
+  }
+  .more summary {
+    min-height: 44px;
+    padding-block: 0;
+  }
+  .pills span {
+    display: inline-flex;
+    align-items: center;
+  }
+  .contact__mail a,
+  .footer__info a,
+  .footer__bottom a,
+  .quote__legal a,
+  .faq details p a.link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .footer__top {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .footer__rate {
+    margin-top: 14px;
+  }
+  .linkbtn {
+    min-height: 44px;
+    padding-inline: 2px;
+    border-bottom: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* texto de lectura de 14 px o más */
+  .badge,
+  .eyebrow,
+  .bill__title,
+  .calc__legal,
+  .biz__legal,
+  .quote__legal,
+  .quote__note,
+  .calc__grid dt,
+  .field label small {
+    font-size: 13px;
+  }
+  .sun__label,
+  .field label,
+  .field legend,
+  .contact__mail,
+  .calc__field label {
+    font-size: 14px;
+  }
+  small {
+    font-size: 13px;
+  }
+}
+h1.hero__lead,
+.hero__sub {
+  text-shadow: 0 2px 18px rgba(7, 9, 12, 0.75), 0 0 2px rgba(7, 9, 12, 0.4);
+}
+@media (max-width: 900px) {
+  .footer__info {
+    gap: 0;
+  }
+}
