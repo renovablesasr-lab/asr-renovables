@@ -3634,3 +3634,180 @@ body.menu-open .dock > * {
     padding-block: 12px;
   }
 }
+
+/* =========================================================
+   Recorrido v3: más corto y con llamados a la acción claros
+   ========================================================= */
+/* portada: la promesa es el h1; la marca va como logotipo */
+h1.hero__lead {
+  font-weight: 400;
+}
+h1.hero__lead span {
+  color: var(--muted);
+}
+.hero__title {
+  color: inherit;
+}
+
+/* botones de WhatsApp al cierre de bloques */
+.projects__cta,
+.why__cta {
+  display: inline-flex;
+  margin-top: clamp(24px, 4vh, 36px);
+}
+.projects__cta {
+  display: flex;
+  width: fit-content;
+  margin-inline: auto;
+}
+.clients {
+  margin-top: clamp(36px, 6vh, 56px);
+}
+.clients .h3 {
+  margin-bottom: 18px;
+}
+.clients .reviews:not([hidden]) + .rate {
+  margin-top: 18px;
+}
+.rate {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 18px 22px;
+}
+.rate__copy {
+  gap: 4px;
+}
+.rate__copy h3 {
+  font-size: 18px;
+}
+.rate__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* empresas ahora vive dentro de servicios */
+.services .biz {
+  margin-top: clamp(40px, 6vh, 64px);
+}
+
+/* preguntas: el botón de WhatsApp ya no es un enlace chico */
+.faq__intro p {
+  margin-bottom: 14px;
+}
+.faq__wa {
+  min-height: 48px;
+}
+.faq details p a.link {
+  white-space: nowrap;
+}
+
+/* contacto: dos botones grandes en lugar de tres datos repetidos */
+.contact__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.contact__cta .btn {
+  flex: 1 1 200px;
+  min-height: 54px;
+}
+.contact__mail {
+  font-size: 14px;
+  color: var(--soft);
+}
+.contact__mail a {
+  color: var(--muted);
+  border-bottom: 1px solid var(--line-2);
+}
+
+/* pie de página corto */
+.footer__info {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.footer__info a:hover {
+  color: var(--gold-2);
+}
+
+@media (max-width: 900px) {
+  .projects__cta,
+  .why__cta,
+  .faq__wa {
+    width: 100%;
+  }
+  .rate {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .rate__actions .btn {
+    flex: 1 1 100%;
+    min-height: 46px;
+  }
+  .contact__cta .btn {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding-block: 52px;
+  }
+  .contact {
+    padding-block: 56px 48px;
+  }
+  .biz__media {
+    aspect-ratio: 16 / 9;
+  }
+  .biz__content {
+    gap: 16px;
+    padding: 22px 20px 26px;
+  }
+  .why__photo {
+    aspect-ratio: 16 / 9;
+  }
+  .why {
+    margin-top: 30px;
+  }
+  .services .biz {
+    margin-top: 32px;
+  }
+  .footer {
+    padding-top: 36px;
+  }
+  .footer__logo {
+    width: 96px;
+  }
+  .footer__inner {
+    gap: 14px;
+  }
+  .footer__info {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    line-height: 1.6;
+  }
+  .footer__bottom {
+    margin-top: 22px;
+  }
+}
+.footer__info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 18px;
+}
+@media (max-width: 900px) {
+  .footer__nav {
+    margin-top: 18px;
+  }
+  .footer__tagline {
+    margin-top: 12px;
+  }
+  .quote {
+    gap: 14px;
+    padding: 22px 18px;
+  }
+}

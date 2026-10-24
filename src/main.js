@@ -576,8 +576,7 @@ fetch('resenas.json', { cache: 'no-cache' })
     reviewsBox.innerHTML = ok.map(reviewCard).join('');
     reviewsBox.hidden = false;
     $('[data-reviews-empty]')?.remove();
-    const aside = $('[data-reviews-aside]');
-    if (aside) aside.textContent = 'Lo que dicen quienes ya pagan menos luz.';
+    $('[data-reviews-title]')?.removeAttribute('hidden');
     ScrollTrigger.refresh();
   });
 
