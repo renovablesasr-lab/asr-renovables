@@ -3114,13 +3114,15 @@ body.menu-open .dock > * {
 
 /* ---------- palabras clave con brillo dorado ---------- */
 .hl {
-  background: linear-gradient(100deg, currentColor 0 40%, var(--gold-2) 48%, #fff1c9 52%, var(--gold) 58%, var(--gold-2) 100%);
+  background: linear-gradient(100deg, var(--cream) 0 40%, var(--gold-2) 48%, #fff1c9 52%, var(--gold) 58%, var(--gold-2) 100%);
   background-size: 260% 100%;
   background-position: 100% 0;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 .hl:not(.is-lit) {
   background-position: 0 0;

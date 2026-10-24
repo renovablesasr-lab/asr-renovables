@@ -173,7 +173,7 @@ function updateHud(t) {
 
   const full = charge >= 0.995;
   hud.classList.toggle('is-full', full);
-  H.state.textContent = full ? 'Batería llena. Así queda tu casa.' : t < 0.02 ? 'Amanecer · sin sol aún' : 'Cargando con el sol';
+  H.state.textContent = full ? 'Batería llena ✓' : t < 0.02 ? 'Amanecer · sin sol aún' : 'Cargando con el sol';
 
   // mientras bajas, el rayo indica que se está cargando
   if (t > lastT + 0.0005 && !full) {
