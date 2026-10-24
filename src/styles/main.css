@@ -3980,3 +3980,34 @@ h1.hero__lead,
     gap: 0;
   }
 }
+
+/* v5: voz más humana */
+.calc__grid {
+  grid-template-columns: 1fr;
+}
+.sol h3 small {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--soft);
+}
+@media (max-width: 900px) {
+  .scroll-cue {
+    width: 88%;
+    text-align: center;
+  }
+  .scroll-cue span {
+    display: block;
+    white-space: normal;
+    letter-spacing: 0.14em;
+    line-height: 1.5;
+  }
+}
+@media (max-width: 400px) {
+  .hero__eyebrow {
+    letter-spacing: 0.13em;
+  }
+}

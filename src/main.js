@@ -173,7 +173,15 @@ function updateHud(t) {
 
   const full = charge >= 0.995;
   hud.classList.toggle('is-full', full);
-  H.state.textContent = full ? 'Batería llena ✓' : t < 0.02 ? 'Amanecer · sin sol aún' : 'Cargando con el sol';
+  H.state.textContent = full
+    ? 'Llena con el sol de hoy ✓'
+    : t < 0.1
+      ? 'Todavía no sale el sol'
+      : t < 0.36
+        ? 'Ya empezó a cargar'
+        : t < 0.62
+          ? 'Sol a todo lo que da'
+          : 'Ya casi se llena';
 
   // mientras bajas, el rayo indica que se está cargando
   if (t > lastT + 0.0005 && !full) {
@@ -527,9 +535,9 @@ form.addEventListener('submit', async (e) => {
     try {
       await sendMail(endpoint, { ...d, _subject: `Cotización · ${d.tipo} · ${d.nombre}`, _template: 'table' });
       form.reset();
-      note.textContent = '¡Gracias! Recibimos tu solicitud y te contactaremos pronto.';
+      note.textContent = '¡Listo, ya nos llegó! Te llamamos para agendar tu visita.';
     } catch {
-      note.textContent = 'No se pudo enviar. Escríbenos por WhatsApp o llama al 656 103 1243.';
+      note.textContent = 'No se envió, perdón. Escríbenos por WhatsApp o llámanos al 656 103 1243.';
     } finally {
       btn.disabled = false;
     }
@@ -539,15 +547,15 @@ form.addEventListener('submit', async (e) => {
   // sin endpoint: abre el correo del visitante con la solicitud lista
   const subject = `Solicitud de cotización · ${d.tipo} · ${d.nombre}`;
   window.location.href = `mailto:aerorenovables@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(toText(d))}`;
-  note.textContent = 'Se abrió tu correo con la solicitud. Si no se abrió, llámanos al 656 103 1243.';
+  note.textContent = 'Te abrimos el correo con todo listo, solo dale enviar. Si no se abrió, llámanos al 656 103 1243.';
 });
 
 $('[data-wa-send]').addEventListener('click', () => {
   const d = readForm();
   if (!d) return;
-  const msg = `Hola ASR Renovables, vengo desde tu página web, me interesa hacer una cotización.\n${toText(d)}`;
+  const msg = `Hola, quiero ver cuánto bajaría mi recibo de luz. Estos son mis datos:\n${toText(d)}`;
   window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
-  note.textContent = 'Se abrió WhatsApp con tu solicitud. Solo presiona enviar.';
+  note.textContent = 'Ya está tu mensaje en WhatsApp. Solo dale enviar.';
 });
 
 /* =========================================================
@@ -680,9 +688,8 @@ if (calc) {
     animateTo('kwp', panels * PANEL_KW, (v) => fmt1.format(v));
     animateTo('area', panels * PANEL_M2, (v) => fmt.format(v));
     animateTo('save', bill * 6 * 0.95, (v) => money.format(v));
-    animateTo('area2', panels * PANEL_M2, (v) => fmt.format(v));
     quoteLink.href = `https://wa.me/526561031243?text=${encodeURIComponent(
-      `Hola ASR Renovables, usé la calculadora de su página. Pago aprox. ${money.format(bill)} al bimestre (${fmt.format(kwh)} kWh) y me salen ${panels} paneles (${fmt1.format(panels * PANEL_KW)} kWp). Quiero que revisen mi recibo.`
+      `Hola, usé su calculadora: pago como ${money.format(bill)} al bimestre y me salieron ${panels} paneles. ¿Me ayudan a revisar mi recibo?`
     )}`;
 
     // recibo: hoy vs. con solar (el sistema cubre ~95 %)
@@ -771,8 +778,8 @@ if (quick) {
   const qIn = $('input', quick);
   $('.hero__wa')?.addEventListener('click', (e) => {
     const bill = Number(qIn.value.replace(/\D/g, ''));
-    const base = 'Hola ASR Renovables, quiero que revisen mi recibo de CFE.';
-    e.currentTarget.href = `https://wa.me/526561031243?text=${encodeURIComponent(bill ? `${base} Pago aprox. $${bill.toLocaleString('es-MX')} al bimestre.` : base)}`;
+    const base = 'Hola, quiero ver cuánto bajaría mi recibo de luz. Les mando foto.';
+    e.currentTarget.href = `https://wa.me/526561031243?text=${encodeURIComponent(bill ? `Hola, pago como $${bill.toLocaleString('es-MX')} de luz al bimestre. ¿Les mando foto del recibo para ver cuánto bajaría?` : base)}`;
   });
   const money0 = new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 });
   qIn.addEventListener('input', () => {
